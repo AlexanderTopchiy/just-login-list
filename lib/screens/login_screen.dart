@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:just_login_list/screens/users_screen.dart';
 
 /// This class represent UI of Login screen
 class LoginScreen extends StatefulWidget {
@@ -7,6 +9,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
+  bool _isPasswordNotEmpty = false;
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(() {
+      setState(() {
+        _isPasswordNotEmpty = _passwordController.value.text.isNotEmpty;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +71,7 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: 30),
                         TextFormField(
-                          controller: TextEditingController(),
+                          controller: _passwordController,
                           decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: 'Пароль'
@@ -64,7 +79,7 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: 30),
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () => _isPasswordNotEmpty ? _loginButtonCallback() : null,
                           color: Color.fromRGBO(155, 81, 224, 0.5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -89,5 +104,9 @@ class LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  void _loginButtonCallback() {
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => UsersScreen()));
   }
 }
