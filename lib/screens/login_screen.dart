@@ -76,6 +76,7 @@ class LoginScreenState extends State<LoginScreen> {
                               border: UnderlineInputBorder(),
                               labelText: 'Пароль'
                           ),
+                          obscureText: true,
                         ),
                         SizedBox(height: 30),
                         MaterialButton(
