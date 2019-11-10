@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:just_login_list/data/models.dart';
-import 'package:just_login_list/data/user_repository.dart';
+import 'package:just_login_list/data/users_repository.dart';
 
 /// This class represent logic for Users list screen
 class UsersLogic {

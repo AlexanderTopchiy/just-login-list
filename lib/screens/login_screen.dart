@@ -13,6 +13,7 @@ class LoginScreenState extends State<LoginScreen> {
   bool _isPasswordNotEmpty = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  FocusNode _passwordFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -34,93 +35,100 @@ class LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordFocusNode.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(232, 233, 237, 1),
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Image.asset('assets/bg_login.png', alignment: Alignment.topCenter),
-          Positioned(
-            bottom: 50,
-            left: 30,
-            right: 30,
-            top: 100,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Вход',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 34,
+      body: GestureDetector(
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.asset('assets/bg_login.png', alignment: Alignment.topCenter),
+            Positioned(
+              bottom: 50,
+              left: 30,
+              right: 30,
+              top: 100,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Вход',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 34,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 40),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 45, horizontal: 30),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 10),
-                          blurRadius: 20,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            border: UnderlineInputBorder(),
-                            labelText: 'Email'
+                    SizedBox(height: 40),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 45, horizontal: 30),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 10),
+                            blurRadius: 20,
                           ),
-                        ),
-                        SizedBox(height: 30),
-                        TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
+                        ],
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
                               border: UnderlineInputBorder(),
-                              labelText: 'Пароль'
+                              labelText: 'Email'
+                            ),
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (focus) => FocusScope.of(context).requestFocus(_passwordFocusNode),
                           ),
-                          obscureText: true,
-                        ),
-                        SizedBox(height: 30),
-                        MaterialButton(
-                          onPressed: () => _isEmailNotEmpty & _isPasswordNotEmpty
-                                              ? _loginButtonCallback()
-                                              : null,
-                          color: _isEmailNotEmpty & _isPasswordNotEmpty
-                                    ? Color.fromRGBO(155, 81, 224, 1)
-                                    : Color.fromRGBO(155, 81, 224, 0.5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                          SizedBox(height: 30),
+                          TextFormField(
+                            controller: _passwordController,
+                            focusNode: _passwordFocusNode,
+                            decoration: InputDecoration(
+                                border: UnderlineInputBorder(),
+                                labelText: 'Пароль'
+                            ),
+                            obscureText: true,
                           ),
-                          minWidth: double.infinity,
-                          height: 38,
-                          child: Text(
-                            'Войти',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
+                          SizedBox(height: 30),
+                          MaterialButton(
+                            onPressed: () => _isEmailNotEmpty & _isPasswordNotEmpty
+                                                ? _loginButtonCallback()
+                                                : null,
+                            color: _isEmailNotEmpty & _isPasswordNotEmpty
+                                      ? Color.fromRGBO(155, 81, 224, 1)
+                                      : Color.fromRGBO(155, 81, 224, 0.5),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            minWidth: double.infinity,
+                            height: 38,
+                            child: Text(
+                              'Войти',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        onTap: () => FocusScope.of(context).unfocus(),
       ),
     );
   }
