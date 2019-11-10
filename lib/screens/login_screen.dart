@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   bool _isPasswordNotEmpty = false;
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -20,6 +21,13 @@ class LoginScreenState extends State<LoginScreen> {
         _isPasswordNotEmpty = _passwordController.value.text.isNotEmpty;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
@@ -63,7 +71,7 @@ class LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                          controller: TextEditingController(),
+                          controller: _emailController,
                           decoration: InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: 'Email'
