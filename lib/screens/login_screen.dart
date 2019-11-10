@@ -9,6 +9,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
+  bool _isEmailNotEmpty = false;
   bool _isPasswordNotEmpty = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -16,6 +17,11 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    _emailController.addListener(() {
+      setState(() {
+        _isEmailNotEmpty = _emailController.value.text.isNotEmpty;
+      });
+    });
     _passwordController.addListener(() {
       setState(() {
         _isPasswordNotEmpty = _passwordController.value.text.isNotEmpty;
@@ -88,8 +94,12 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(height: 30),
                         MaterialButton(
-                          onPressed: () => _isPasswordNotEmpty ? _loginButtonCallback() : null,
-                          color: Color.fromRGBO(155, 81, 224, 0.5),
+                          onPressed: () => _isEmailNotEmpty & _isPasswordNotEmpty
+                                              ? _loginButtonCallback()
+                                              : null,
+                          color: _isEmailNotEmpty & _isPasswordNotEmpty
+                                    ? Color.fromRGBO(155, 81, 224, 1)
+                                    : Color.fromRGBO(155, 81, 224, 0.5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
