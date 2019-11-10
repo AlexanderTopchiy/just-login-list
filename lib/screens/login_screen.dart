@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:just_login_list/resources/res_colors.dart';
+import 'package:just_login_list/resources/res_images.dart';
+import 'package:just_login_list/resources/res_strings.dart';
+import 'package:just_login_list/resources/res_styles.dart';
 import 'package:just_login_list/screens/users_screen.dart';
 
 /// This class represent UI of Login screen
@@ -41,12 +45,12 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(232, 233, 237, 1),
+      backgroundColor: ResColors.bgLogin,
       body: GestureDetector(
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Image.asset('assets/bg_login.png', alignment: Alignment.topCenter),
+            Image.asset(ResImages.bg_login, alignment: Alignment.topCenter),
             Positioned(
               bottom: 50,
               left: 30,
@@ -57,34 +61,18 @@ class LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Вход',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 34,
-                      ),
+                      ResStrings.enter,
+                      style: ResStyles.screenTitle,
                     ),
                     SizedBox(height: 40),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 45, horizontal: 30),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            offset: Offset(0, 10),
-                            blurRadius: 20,
-                          ),
-                        ],
-                      ),
+                      decoration: ResStyles.loginCard,
                       child: Column(
                         children: <Widget>[
                           TextFormField(
                             controller: _emailController,
-                            decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: 'Email'
-                            ),
+                            decoration: ResStyles.textInput(ResStrings.email),
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (focus) => FocusScope.of(context).requestFocus(_passwordFocusNode),
                           ),
@@ -92,10 +80,7 @@ class LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             controller: _passwordController,
                             focusNode: _passwordFocusNode,
-                            decoration: InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: 'Пароль'
-                            ),
+                            decoration: ResStyles.textInput(ResStrings.password),
                             obscureText: true,
                           ),
                           SizedBox(height: 30),
@@ -104,19 +89,16 @@ class LoginScreenState extends State<LoginScreen> {
                                                 ? _loginButtonCallback()
                                                 : null,
                             color: _isEmailNotEmpty & _isPasswordNotEmpty
-                                      ? Color.fromRGBO(155, 81, 224, 1)
-                                      : Color.fromRGBO(155, 81, 224, 0.5),
+                                      ? ResColors.accessed
+                                      : ResColors.notAccessed,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
                             minWidth: double.infinity,
                             height: 38,
                             child: Text(
-                              'Войти',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
+                              ResStrings.toComeIn,
+                              style: ResStyles.btText,
                             ),
                           ),
                         ],

@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:just_login_list/data/models.dart';
 import 'package:just_login_list/logic/users_logic.dart';
+import 'package:just_login_list/resources/res_colors.dart';
+import 'package:just_login_list/resources/res_images.dart';
+import 'package:just_login_list/resources/res_strings.dart';
+import 'package:just_login_list/resources/res_styles.dart';
 
 /// This class represent UI of Users list screen
 class UsersScreen extends StatefulWidget {
@@ -35,8 +39,8 @@ class UsersScreenState extends State<UsersScreen> {
                     expandedHeight: 100,
                     flexibleSpace: FlexibleSpaceBar(
                       title: Text(
-                        'Пользователи',
-                        style: TextStyle(color: Colors.black)
+                        ResStrings.users,
+                        style: ResStyles.blackText
                       ),
                       centerTitle: true,
                     ),
@@ -48,13 +52,10 @@ class UsersScreenState extends State<UsersScreen> {
                       (context, index) {
                         var user = snapshot.data[index];
                         return ListTile(
-                          leading: Image.asset('assets/user_avatar.png'),
+                          leading: Image.asset(ResImages.user_avatar),
                           title: Text(
                             user.userName,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
-                            ),
+                            style: ResStyles.ltTitle,
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,9 +63,7 @@ class UsersScreenState extends State<UsersScreen> {
                               Text(user.email),
                               Text(
                                 user.company.name,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
+                                style: ResStyles.blackText,
                               ),
                             ],
                           ),
@@ -80,31 +79,28 @@ class UsersScreenState extends State<UsersScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset('assets/warning.png'),
+                  Image.asset(ResImages.warning),
                   SizedBox(height: 36),
-                  Text('Не удалось загрузить информацию'),
+                  Text(ResStrings.cantLoadInfo),
                   SizedBox(height: 36),
                   MaterialButton(
                     onPressed: () => _refreshButtonCallback(),
-                    color: Color.fromRGBO(155, 81, 224, 1),
+                    color: ResColors.accessed,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                     minWidth: 230,
                     height: 38,
                     child: Text(
-                      'Обновить',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
+                      ResStrings.refresh,
+                      style: ResStyles.btText,
                     ),
                   ),
                 ],
               );
             }
             return CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(Color.fromRGBO(155, 81, 224, 1)),
+              valueColor: new AlwaysStoppedAnimation<Color>(ResColors.accessed),
             );
           }
         ),
