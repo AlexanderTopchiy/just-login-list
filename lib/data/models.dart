@@ -3,16 +3,16 @@ class User {
   final int id;
   final String userName;
   final String email;
-  final Company companyName;
+  final Company company;
 
-  User({this.id, this.userName, this.email, this.companyName});
+  User({this.id, this.userName, this.email, this.company});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
       userName: json['name'],
       email: json['email'],
-      companyName: Company.fromJson(json['company'])
+      company: Company.fromJson(json['company'])
     );
   }
 }
